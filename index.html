@@ -1,0 +1,883 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="theme-color" content="#120d09" />
+  <meta name="description" content="أثرنا — منصة سياحية ذكية للبتراء تجمع الذكاء الاصطناعي وXR/3D وإدارة تجربة الزائر." />
+  <title>أثرنا | ATHRUNA — Petra 2076</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;500;600;700;800&family=Manrope:wght@400;600;700;800&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" />
+  <style>
+:root {
+  --bg: #0c0806;
+  --bg-soft: #130d09;
+  --bg-stone: #19120d;
+  --text: #f7f3ee;
+  --muted: #b9aaa0;
+  --muted-2: #8e7f75;
+  --copper: #c86d43;
+  --copper-2: #e19a61;
+  --sand: #e8bb80;
+  --line: rgba(255, 226, 190, 0.14);
+  --line-strong: rgba(232, 187, 128, 0.34);
+  --shadow: 0 30px 80px rgba(0, 0, 0, .45);
+  --radius: 26px;
+  --max: 1180px;
+}
+
+* { box-sizing: border-box; margin: 0; padding: 0; }
+html { scroll-behavior: smooth; }
+body {
+  font-family: 'Cairo', system-ui, sans-serif;
+  background: var(--bg);
+  color: var(--text);
+  line-height: 1.7;
+  overflow-x: hidden;
+}
+body::before {
+  content: '';
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: -3;
+  background:
+    radial-gradient(circle at 80% 10%, rgba(200,109,67,.12), transparent 28%),
+    radial-gradient(circle at 20% 70%, rgba(232,187,128,.05), transparent 32%),
+    linear-gradient(180deg, #0b0705, #120b08 35%, #0b0705 100%);
+}
+
+.noise {
+  position: fixed; inset: 0; pointer-events: none; opacity: .06; z-index: 30;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160' viewBox='0 0 160 160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.75' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='.55'/%3E%3C/svg%3E");
+}
+.site-glow { position: fixed; width: 380px; height: 380px; border-radius: 50%; filter: blur(80px); pointer-events: none; opacity: .13; z-index: -2; }
+.site-glow-a { top: 18%; right: -120px; background: #c86d43; }
+.site-glow-b { bottom: 12%; left: -120px; background: #e8bb80; }
+
+.container { width: min(var(--max), calc(100% - 48px)); margin-inline: auto; }
+a { color: inherit; text-decoration: none; }
+button, input { font: inherit; }
+
+.topbar {
+  position: fixed; z-index: 50; top: 18px; left: 50%; transform: translateX(-50%);
+  width: min(1250px, calc(100% - 28px));
+  display: grid; grid-template-columns: 1fr auto 1fr; align-items: center; gap: 18px;
+  padding: 10px 14px 10px 12px;
+  border: 1px solid rgba(255,255,255,.11);
+  background: rgba(12,8,6,.68);
+  backdrop-filter: blur(18px); -webkit-backdrop-filter: blur(18px);
+  border-radius: 18px;
+  box-shadow: 0 18px 50px rgba(0,0,0,.25);
+}
+.brand { display: flex; align-items: center; gap: 10px; justify-self: start; }
+.brand-mark { width: 38px; height: 38px; display: grid; place-items: center; border-radius: 12px; background: linear-gradient(145deg, rgba(225,154,97,.2), rgba(200,109,67,.08)); border: 1px solid var(--line-strong); color: var(--sand); }
+.brand strong { display: block; font-size: 1rem; font-weight: 800; letter-spacing: .02em; }
+.brand small { display: block; font-family: Manrope, sans-serif; color: var(--muted-2); font-size: .6rem; letter-spacing: .18em; direction: ltr; }
+.nav { display: flex; gap: 20px; align-items: center; justify-content: center; }
+.nav a { color: #c9beb7; font-size: .75rem; transition: color .2s ease; }
+.nav a:hover { color: #fff; }
+.nav-cta { justify-self: end; display: inline-flex; align-items: center; gap: 9px; background: #efe6db; color: #17100b; padding: 9px 14px; border-radius: 12px; font-weight: 800; font-size: .72rem; }
+.nav-cta i { font-size: .72rem; }
+
+.hero { position: relative; min-height: 100vh; display: flex; align-items: center; overflow: hidden; }
+.hero-media { position: absolute; inset: 0; background: url('https://upload.wikimedia.org/wikipedia/commons/7/72/Petra_Al_Khazneh_from_Jabal_al-Khubtha_2264.jpg') center 42% / cover no-repeat; filter: saturate(.88) contrast(1.08); transform: scale(1.03); }
+.hero-shade { position: absolute; inset: 0; background: linear-gradient(90deg, rgba(8,5,4,.16), rgba(8,5,4,.62) 55%, rgba(8,5,4,.93) 100%), linear-gradient(180deg, rgba(6,4,3,.4), rgba(6,4,3,.25) 35%, rgba(6,4,3,.85) 100%); }
+.hero-grid { position: absolute; inset: 0; opacity: .13; background-size: 34px 34px; background-image: linear-gradient(rgba(255,255,255,.03) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,.03) 1px, transparent 1px); mask-image: linear-gradient(to bottom, transparent, black 30%, black 80%, transparent); }
+.hero-content { position: relative; z-index: 2; padding-top: 100px; padding-bottom: 90px; }
+.eyebrow, .hero-pill, .section-kicker, .closing-kicker, .stack-label, .business-title { font-family: Manrope, 'Cairo', sans-serif; letter-spacing: .12em; direction: ltr; }
+.eyebrow { color: #eadfd4; font-size: .7rem; font-weight: 800; display: flex; align-items: center; gap: 10px; }
+.eyebrow span { display: block; width: 38px; height: 1px; background: var(--sand); }
+.hero-pill { display: inline-flex; margin-top: 24px; padding: 8px 12px; border-radius: 999px; color: var(--sand); border: 1px solid rgba(232,187,128,.28); background: rgba(12,8,6,.42); font-size: .62rem; font-weight: 800; gap: 8px; align-items: center; }
+.hero h1 { margin-top: 22px; max-width: 760px; font-size: clamp(3.3rem, 8vw, 6.8rem); line-height: .99; letter-spacing: -.05em; font-weight: 800; }
+.hero h1 em { color: #f0c58d; font-style: normal; }
+.hero-lead { margin-top: 28px; max-width: 620px; color: #d8ccc3; font-size: 1rem; }
+.hero-actions { display: flex; gap: 12px; flex-wrap: wrap; margin-top: 34px; }
+.btn { display: inline-flex; align-items: center; gap: 10px; padding: 12px 17px; border-radius: 14px; font-size: .78rem; font-weight: 800; border: 1px solid transparent; transition: transform .25s, filter .25s, background .25s; }
+.btn:hover { transform: translateY(-2px); filter: brightness(1.06); }
+.btn-primary { color: #1a100b; background: linear-gradient(135deg, #f1d4ac, #cf7c4f); }
+.btn-glass { background: rgba(255,255,255,.07); border-color: rgba(255,255,255,.14); }
+.hero-proof { display: flex; gap: 32px; flex-wrap: wrap; margin-top: 58px; }
+.hero-proof > div { display: grid; grid-template-columns: auto; }
+.hero-proof b { font-family: Manrope, sans-serif; font-size: .72rem; letter-spacing: .12em; }
+.hero-proof small { color: #a59a93; font-size: .63rem; }
+.dot-live { width: 8px; height: 8px; border-radius: 50%; background: #6bdb94; box-shadow: 0 0 14px #6bdb94; margin-bottom: 7px; }
+.scroll-cue { position: absolute; z-index: 3; bottom: 28px; right: 50%; transform: translateX(50%); display: flex; flex-direction: column; align-items: center; gap: 8px; color: #9e938b; font: 700 .58rem/1 Manrope, sans-serif; letter-spacing: .18em; direction: ltr; }
+.scroll-cue i { color: var(--sand); }
+
+.stats-strip { background: linear-gradient(180deg, rgba(19,13,9,.9), #110b08); border-top: 1px solid var(--line); border-bottom: 1px solid var(--line); }
+.stats-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 0; }
+.metric { padding: 26px 28px; border-inline-start: 1px solid var(--line); }
+.metric:first-child { border-inline-start: 0; }
+.metric strong { font: 800 1.75rem/1 Manrope, sans-serif; color: var(--sand); direction: ltr; }
+.metric span { display: block; margin-top: 7px; color: #b2a69e; font-size: .72rem; }
+.metric-note { padding: 0 0 18px; color: #70665e; font-size: .58rem; }
+
+.section { position: relative; padding: 120px 0; }
+.section-dark { background: linear-gradient(180deg, #0c0806, #120b08 50%, #0b0705); border-top: 1px solid rgba(255,255,255,.03); border-bottom: 1px solid rgba(255,255,255,.03); }
+.section-stone { background: linear-gradient(180deg, #17100c, #1a120d); }
+.section-head { max-width: 700px; margin-bottom: 48px; }
+.section-head.centered { text-align: center; margin-inline: auto; }
+.section-kicker { color: var(--copper-2); font-size: .62rem; font-weight: 800; }
+.section-head h2, .copy-block h2 { margin-top: 12px; font-size: clamp(2.4rem, 6vw, 4.8rem); line-height: 1.08; letter-spacing: -.04em; }
+.section-head h2 span, .copy-block h2 span { color: #e6b77e; }
+.section-head p, .copy-block p { margin-top: 16px; color: var(--muted); max-width: 660px; font-size: .93rem; }
+.centered p { margin-inline: auto; }
+
+.split-section { display: grid; grid-template-columns: 1fr 1fr; gap: 72px; align-items: center; }
+.experience-card { min-height: 600px; position: relative; border-radius: 28px; overflow: hidden; border: 1px solid var(--line); box-shadow: var(--shadow); background: #1b120e; }
+.experience-image { position: absolute; inset: 0; background: linear-gradient(180deg, rgba(0,0,0,.06), rgba(0,0,0,.56)), url('https://upload.wikimedia.org/wikipedia/commons/7/72/Petra_Al_Khazneh_from_Jabal_al-Khubtha_2264.jpg') center / cover no-repeat; }
+.image-caption { position: absolute; left: 18px; right: 18px; bottom: 18px; display: flex; justify-content: space-between; gap: 16px; font: 700 .62rem Manrope, sans-serif; color: #f4e8dd; direction: ltr; }
+.image-caption span:last-child { color: #d2b89a; }
+.experience-badge { position: absolute; top: 22px; right: 22px; width: 180px; padding: 12px 14px; border-radius: 16px; border: 1px solid rgba(255,255,255,.14); background: rgba(11,7,5,.58); backdrop-filter: blur(12px); }
+.experience-badge span { color: var(--sand); font: 800 .65rem Manrope, sans-serif; }
+.experience-badge b { display: block; margin-top: 4px; font: 800 .62rem Manrope, sans-serif; letter-spacing: .06em; }
+.experience-badge small { color: #9c9189; font-size: .59rem; }
+.feature-list { margin-top: 34px; display: grid; gap: 13px; }
+.feature-list > div, .mini-features > div { display: flex; align-items: flex-start; gap: 12px; padding: 13px 0; border-top: 1px solid var(--line); }
+.feature-list i, .mini-features i { color: var(--sand); width: 18px; margin-top: 4px; }
+.feature-list b, .mini-features b { display: block; font-size: .8rem; }
+.feature-list small, .mini-features small { display: block; color: #8f837b; font-size: .65rem; margin-top: 2px; }
+
+.problem-layout { display: grid; grid-template-columns: 1.1fr .9fr; gap: 18px; }
+.crowd-image { min-height: 540px; border: 1px solid var(--line); border-radius: 26px; background: linear-gradient(180deg, rgba(0,0,0,.06), rgba(0,0,0,.72)), url('https://upload.wikimedia.org/wikipedia/commons/f/f3/Tourists_photographing_Al-Khazneh%2C_Petra%2C_Jordan.jpg') center / cover no-repeat; box-shadow: var(--shadow); }
+.problem-cards { display: grid; gap: 18px; }
+.problem-card { position: relative; padding: 26px; border: 1px solid var(--line); border-radius: 22px; background: rgba(255,255,255,.025); transition: transform .25s, border-color .25s, background .25s; }
+.problem-card:hover { transform: translateY(-4px); border-color: var(--line-strong); background: rgba(255,255,255,.04); }
+.problem-card > span { position: absolute; top: 20px; left: 22px; color: #756b64; font: 800 .66rem Manrope, sans-serif; }
+.problem-card i { color: var(--copper-2); font-size: 1.15rem; }
+.problem-card h3 { margin-top: 18px; font: 800 1rem Manrope, sans-serif; letter-spacing: .08em; }
+.problem-card p { margin-top: 8px; color: #9b8e85; font-size: .76rem; }
+.stakeholders { margin-top: 22px; padding: 18px 22px; border: 1px dashed rgba(232,187,128,.24); border-radius: 20px; }
+.stake-title { color: #7b7068; font: 700 .56rem Manrope, sans-serif; letter-spacing: .13em; }
+.stake-line { display: flex; align-items: center; justify-content: space-between; gap: 12px; margin-top: 10px; }
+.stake-line span { color: #cfc4bc; font-size: .7rem; display: flex; gap: 8px; align-items: center; }
+.stake-line b { color: var(--copper-2); }
+
+.solution-grid { display: grid; grid-template-columns: 1.35fr 1fr 1fr; gap: 16px; }
+.solution-card { padding: 24px; min-height: 250px; border: 1px solid var(--line); border-radius: 22px; background: linear-gradient(180deg, rgba(255,255,255,.03), rgba(255,255,255,.012)); }
+.solution-card.big { background: linear-gradient(160deg, rgba(200,109,67,.14), rgba(255,255,255,.02)); }
+.card-top { display: flex; align-items: center; justify-content: space-between; }
+.index { color: var(--sand); font: 800 .63rem Manrope, sans-serif; }
+.card-top i { color: var(--copper-2); }
+.solution-card h3 { margin-top: 26px; font: 800 .95rem Manrope, sans-serif; letter-spacing: .1em; }
+.solution-card ul { list-style: none; margin-top: 15px; display: grid; gap: 9px; color: #a89c94; font-size: .72rem; }
+.solution-card li::before { content: '—'; color: #d69a65; margin-left: 8px; }
+.quote-panel { margin-top: 16px; border-radius: 22px; padding: 28px; border: 1px solid var(--line); background: radial-gradient(circle at 85% 25%, rgba(232,187,128,.09), transparent 26%), rgba(255,255,255,.02); text-align: center; }
+.quote-mark { color: var(--sand); font: 900 3rem/1 serif; }
+.quote-panel p { color: #dfd3ca; font-size: 1.2rem; line-height: 1.55; }
+.quote-panel small { display: block; margin-top: 10px; color: #756a62; font: 700 .6rem Manrope, sans-serif; direction: ltr; letter-spacing: .14em; }
+
+.timeline { position: relative; display: grid; grid-template-columns: repeat(5, 1fr); gap: 12px; }
+.timeline::before { content: ''; position: absolute; top: 44px; right: 8%; left: 8%; height: 1px; background: linear-gradient(90deg, transparent, var(--line-strong), transparent); }
+.step { position: relative; z-index: 1; text-align: center; padding: 12px 10px 10px; }
+.step-no { font: 800 .58rem Manrope, sans-serif; color: #746961; }
+.step-icon { width: 58px; height: 58px; margin: 10px auto 16px; display: grid; place-items: center; border-radius: 50%; background: #231811; border: 1px solid var(--line-strong); color: var(--sand); box-shadow: 0 10px 30px rgba(0,0,0,.22); }
+.step h3 { font: 800 .78rem Manrope, sans-serif; letter-spacing: .12em; }
+.step p { margin-top: 7px; color: #90847b; font-size: .68rem; }
+.timeline-foot { margin-top: 28px; text-align: center; color: #80756d; font-size: .69rem; }
+.timeline-foot i { color: var(--sand); margin-left: 6px; }
+
+.heritage-grid { display: grid; grid-template-columns: 1.2fr .8fr; gap: 16px; }
+.model-panel, .chat-panel { border: 1px solid var(--line); border-radius: 22px; background: rgba(255,255,255,.022); overflow: hidden; }
+.panel-head { min-height: 54px; padding: 0 16px; display: flex; align-items: center; justify-content: space-between; gap: 12px; border-bottom: 1px solid var(--line); font-size: .72rem; }
+.panel-head > span:first-child { color: #e5d5c6; display: flex; gap: 9px; align-items: center; }
+.panel-head i { color: var(--sand); }
+.panel-head small { color: #766b63; font-size: .6rem; }
+.status { display: inline-flex; align-items: center; gap: 7px; color: #94a9a0; font-size: .6rem; }
+.status i { width: 7px; height: 7px; border-radius: 50%; background: #6fdd99; box-shadow: 0 0 10px #6fdd99; }
+.model-frame { height: 460px; background: #070504; }
+.model-frame.tall { height: 360px; }
+.model-frame iframe { width: 100%; height: 100%; border: 0; }
+.second-model { margin-top: 16px; }
+.chat-panel { display: flex; flex-direction: column; min-height: 514px; }
+.chat-log { padding: 16px; height: 390px; overflow: auto; display: flex; flex-direction: column; gap: 10px; }
+.chat-message { max-width: 87%; padding: 11px 13px; border-radius: 15px; font-size: .72rem; line-height: 1.8; }
+.chat-message.bot { align-self: flex-start; background: rgba(255,255,255,.045); border: 1px solid rgba(232,187,128,.14); color: #ded3cb; border-top-right-radius: 6px; }
+.chat-message.user { align-self: flex-end; background: linear-gradient(135deg, rgba(200,109,67,.3), rgba(232,187,128,.16)); border: 1px solid rgba(232,187,128,.25); color: #fff; border-top-left-radius: 6px; }
+.chat-message.note { align-self: center; max-width: 100%; color: #756a62; font-size: .6rem; padding: 0; background: transparent; border: 0; }
+.prompt-chips { display: flex; gap: 7px; flex-wrap: wrap; padding: 0 14px 10px; }
+.prompt-chip { border: 1px solid var(--line); background: rgba(255,255,255,.02); color: #b9aca4; border-radius: 999px; padding: 6px 9px; font-size: .62rem; cursor: pointer; }
+.prompt-chip:hover { border-color: var(--line-strong); color: #fff; }
+.chat-input { padding: 10px; display: flex; gap: 9px; border-top: 1px solid var(--line); }
+.chat-input input { flex: 1; min-width: 0; border: 1px solid var(--line); background: rgba(0,0,0,.35); color: #fff; border-radius: 12px; padding: 10px 12px; outline: none; font-size: .72rem; }
+.chat-input input:focus { border-color: var(--line-strong); }
+.chat-input button { width: 42px; border: 0; border-radius: 12px; background: linear-gradient(145deg, #e9c18c, #c86d43); color: #1a100b; cursor: pointer; }
+.chat-note { padding: 0 13px 13px; color: #655b54; font-size: .57rem; }
+.chat-note i { color: #a58562; margin-left: 5px; }
+
+.gallery-grid { display: grid; grid-template-columns: 1.05fr 1.6fr 1fr 1fr; grid-auto-rows: 270px; gap: 14px; }
+.photo-card { position: relative; overflow: hidden; padding: 0; border: 1px solid var(--line); border-radius: 22px; background: #170f0b; cursor: pointer; text-align: right; }
+.photo-card.featured { grid-row: span 2; }
+.photo-card img { width: 100%; height: 100%; object-fit: cover; display: block; transition: transform .5s ease, filter .5s ease; filter: saturate(.94) contrast(1.04); }
+.photo-card::after { content: ''; position: absolute; inset: 0; background: linear-gradient(180deg, rgba(0,0,0,.06), rgba(0,0,0,.68)); }
+.photo-card span { position: absolute; z-index: 2; right: 16px; bottom: 14px; color: #f4e9df; font-size: .78rem; font-weight: 800; }
+.photo-card i { position: absolute; z-index: 2; top: 14px; left: 14px; width: 31px; height: 31px; display: grid; place-items: center; border-radius: 50%; color: #f4e9df; border: 1px solid rgba(255,255,255,.16); background: rgba(0,0,0,.25); opacity: .75; }
+.photo-card:hover img { transform: scale(1.05); filter: saturate(1.05) contrast(1.08); }
+
+.operations-visual { border: 1px solid var(--line); border-radius: 24px; padding: 14px; background: linear-gradient(180deg, rgba(255,255,255,.03), rgba(255,255,255,.015)); }
+.ops-top { display: flex; justify-content: space-between; align-items: center; font: 800 .62rem Manrope, sans-serif; letter-spacing: .08em; color: #d9c9bd; direction: ltr; }
+.ops-top span { display: flex; align-items: center; gap: 7px; }
+.ops-top i { color: var(--sand); }
+.ops-top b { color: #8ca99a; font-size: .55rem; border: 1px solid rgba(140,169,154,.25); padding: 4px 7px; border-radius: 999px; }
+.map-canvas { position: relative; min-height: 430px; margin-top: 12px; overflow: hidden; border-radius: 18px; background: radial-gradient(circle at 50% 42%, rgba(232,187,128,.09), transparent 26%), linear-gradient(145deg, #1c130d, #0e0906); border: 1px solid rgba(255,255,255,.05); }
+.map-canvas::before { content: ''; position: absolute; inset: 0; opacity: .28; background-image: linear-gradient(rgba(255,255,255,.04) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,.04) 1px, transparent 1px); background-size: 36px 36px; }
+.map-rings { position: absolute; left: 48%; top: 46%; width: 170px; height: 170px; transform: translate(-50%, -50%); border-radius: 50%; border: 1px dashed rgba(232,187,128,.24); }
+.map-rings span { position: absolute; inset: 28px; border: 1px solid rgba(232,187,128,.15); border-radius: 50%; }
+.map-rings span + span { inset: 58px; }
+.route { position: absolute; height: 2px; background: linear-gradient(90deg, transparent, #d5a16f, transparent); transform-origin: left center; filter: drop-shadow(0 0 6px rgba(213,161,111,.4)); }
+.route-a { width: 250px; left: 24%; top: 52%; transform: rotate(-19deg); }
+.route-b { width: 180px; left: 48%; top: 51%; transform: rotate(42deg); }
+.map-pin { position: absolute; display: flex; align-items: center; gap: 5px; color: #efe3d9; font: 800 .55rem Manrope, sans-serif; direction: ltr; }
+.map-pin i { color: var(--sand); font-size: .82rem; filter: drop-shadow(0 0 8px rgba(232,187,128,.25)); }
+.pin-a { left: 18%; top: 58%; }.pin-b { left: 48%; top: 42%; }.pin-c { left: 69%; top: 66%; }
+.live-queue { position: absolute; right: 16px; top: 16px; padding: 10px 11px; border: 1px solid var(--line); border-radius: 13px; background: rgba(9,6,4,.72); backdrop-filter: blur(10px); }
+.live-queue b { font: 800 .52rem Manrope, sans-serif; letter-spacing: .08em; color: #c9beb6; direction: ltr; }
+.live-queue strong { display: block; margin-top: 2px; font: 800 1.35rem/1 Manrope, sans-serif; color: #efc89b; }
+.live-queue small { display: block; margin-top: 3px; color: #6f655e; font-size: .53rem; }
+.pulse { display: inline-block; width: 7px; height: 7px; margin-right: 4px; border-radius: 50%; background: #6bdc96; box-shadow: 0 0 10px #6bdc96; }
+.ops-cards { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; margin-top: 10px; }
+.ops-cards > div { padding: 10px; border: 1px solid var(--line); border-radius: 13px; background: rgba(255,255,255,.02); }
+.ops-cards span { display: block; color: #756b64; font-size: .56rem; }
+.ops-cards b { display: block; margin-top: 2px; font: 800 .9rem Manrope, sans-serif; color: #e5d2c1; }
+
+.tech-layout { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
+.stack-card { border: 1px solid var(--line); border-radius: 20px; padding: 22px; }
+.stack-label { color: #786c63; font-size: .58rem; font-weight: 800; }
+.stack-tags { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 16px; }
+.stack-tags span { color: #c8bbb3; border: 1px solid var(--line); background: rgba(255,255,255,.025); border-radius: 999px; padding: 7px 10px; font-size: .63rem; }
+.tech-diagram { grid-column: span 2; display: grid; grid-template-columns: 1fr auto 1.2fr auto 1fr; gap: 12px; align-items: center; padding: 18px; border: 1px dashed var(--line-strong); border-radius: 20px; }
+.diagram-node { padding: 18px; border: 1px solid var(--line); border-radius: 16px; text-align: center; background: rgba(255,255,255,.025); font: 800 .72rem Manrope, sans-serif; letter-spacing: .06em; }
+.diagram-node.active { border-color: rgba(232,187,128,.35); background: rgba(200,109,67,.1); }
+.diagram-node span { display: block; margin-top: 6px; color: #756b63; font: 500 .56rem Cairo, sans-serif; letter-spacing: 0; }
+.diagram-arrow { color: var(--sand); font: 800 1.2rem Manrope, sans-serif; }
+
+.impact-grid { display: grid; grid-template-columns: 1fr 1.2fr; gap: 70px; align-items: start; }
+.impact-list { border-top: 1px solid var(--line); }
+.impact-list > div { display: grid; grid-template-columns: 50px 1fr; gap: 14px; padding: 16px 0; border-bottom: 1px solid var(--line); }
+.impact-list span { color: var(--sand); font: 800 1.2rem Manrope, sans-serif; }
+.impact-list b { font-size: .78rem; }
+.impact-list small { grid-column: 2; color: #756b63; font-size: .57rem; margin-top: -9px; }
+.business-grid { margin-top: 26px; padding: 22px; border: 1px solid var(--line); border-radius: 20px; background: rgba(255,255,255,.02); }
+.business-title { color: #796e66; font-size: .57rem; font-weight: 800; }
+.business-items { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 14px; }
+.business-items span { color: #c3b6ad; border: 1px solid var(--line); background: rgba(255,255,255,.02); border-radius: 999px; padding: 7px 10px; font-size: .61rem; }
+.proposal-note { margin-top: 12px; padding: 12px 14px; border-radius: 14px; border: 1px dashed rgba(232,187,128,.24); color: #7f746c; font-size: .61rem; display: flex; gap: 8px; align-items: flex-start; }
+.proposal-note i { color: var(--sand); margin-top: 3px; }
+
+.roadmap { display: grid; grid-template-columns: repeat(3, 1fr); gap: 14px; }
+.roadmap-card { position: relative; min-height: 240px; padding: 24px; border: 1px solid var(--line); border-radius: 22px; background: linear-gradient(180deg, rgba(255,255,255,.03), rgba(255,255,255,.012)); }
+.roadmap-card > span { font: 800 .62rem Manrope, sans-serif; color: var(--sand); }
+.roadmap-card b { display: block; margin-top: 25px; font: 800 1rem Manrope, sans-serif; letter-spacing: .12em; }
+.roadmap-card small { display: block; margin-top: 4px; color: #7c716a; font: 600 .58rem Manrope, sans-serif; }
+.roadmap-card p { margin-top: 17px; color: #958980; font-size: .7rem; }
+.closing { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin-top: 16px; min-height: 430px; }
+.closing-copy { padding: 48px; border: 1px solid var(--line); border-radius: 24px; background: radial-gradient(circle at 80% 20%, rgba(232,187,128,.08), transparent 30%), #100a07; display: flex; flex-direction: column; justify-content: center; }
+.closing-copy h2 { margin-top: 12px; font-size: clamp(2.6rem, 6vw, 5rem); line-height: .99; letter-spacing: -.04em; }
+.closing-copy h2 em { color: var(--sand); font-style: normal; }
+.closing-copy p { margin-top: 20px; color: #897c74; font-size: .72rem; }
+.closing-photo { border: 1px solid var(--line); border-radius: 24px; min-height: 430px; background: linear-gradient(180deg, rgba(0,0,0,.08), rgba(0,0,0,.75)), url('https://upload.wikimedia.org/wikipedia/commons/7/7c/Petra_banner_Al-Khazneh.jpg') center / cover no-repeat; }
+
+.footer { padding: 50px 0 18px; border-top: 1px solid var(--line); background: #090604; }
+.footer-grid { display: grid; grid-template-columns: 1fr 1fr 1.3fr; gap: 28px; }
+.footer-brand { font-weight: 800; }
+.footer-grid p, .footer-grid span { display: block; margin-top: 8px; color: #71665e; font-size: .6rem; line-height: 1.8; }
+.footer-grid b { color: #9d8f86; font: 800 .58rem Manrope, sans-serif; letter-spacing: .12em; direction: ltr; }
+.footer-bottom { display: flex; justify-content: space-between; gap: 18px; margin-top: 30px; padding-top: 14px; border-top: 1px solid var(--line); color: #5d544e; font: 600 .56rem Manrope, sans-serif; direction: ltr; }
+.footer-bottom a { color: #9c8b7e; }
+
+.modal { position: fixed; inset: 0; z-index: 100; display: none; place-items: center; padding: 24px; background: rgba(0,0,0,.92); backdrop-filter: blur(14px); }
+.modal.open { display: grid; }
+.modal img { max-width: min(1100px, 94vw); max-height: 82vh; width: auto; height: auto; border-radius: 18px; border: 1px solid rgba(255,255,255,.14); box-shadow: 0 30px 100px rgba(0,0,0,.65); }
+.modal-close { position: absolute; top: 20px; left: 24px; width: 42px; height: 42px; border: 1px solid rgba(255,255,255,.14); background: rgba(0,0,0,.35); border-radius: 12px; color: #fff; font-size: 1.5rem; cursor: pointer; }
+.modal-caption { color: #dfcfbf; font-size: .8rem; margin-top: 10px; text-align: center; }
+
+.reveal { opacity: 0; transform: translateY(20px); transition: opacity .7s ease, transform .7s ease; }
+.reveal.visible { opacity: 1; transform: translateY(0); }
+
+@media (max-width: 1050px) {
+  .topbar { grid-template-columns: auto 1fr auto; }
+  .nav { gap: 12px; }
+  .split-section, .heritage-grid, .impact-grid { grid-template-columns: 1fr; }
+  .experience-card { min-height: 520px; }
+  .gallery-grid { grid-template-columns: 1fr 1.25fr 1fr; grid-auto-rows: 240px; }
+  .photo-card.featured { grid-row: span 2; }
+  .tech-layout { grid-template-columns: 1fr 1fr; }
+  .tech-diagram { grid-column: span 2; }
+  .closing { grid-template-columns: 1fr; }
+}
+
+@media (max-width: 820px) {
+  .container { width: min(var(--max), calc(100% - 28px)); }
+  .topbar { top: 9px; width: calc(100% - 18px); grid-template-columns: 1fr auto; }
+  .nav { display: none; }
+  .nav-cta { padding: 8px 11px; }
+  .hero-content { padding-top: 110px; }
+  .hero h1 { font-size: clamp(3rem, 15vw, 5.2rem); }
+  .stats-grid { grid-template-columns: repeat(2, 1fr); }
+  .metric:nth-child(3), .metric:nth-child(4) { border-top: 1px solid var(--line); }
+  .metric:nth-child(odd) { border-inline-start: 0; }
+  .section { padding: 88px 0; }
+  .timeline { grid-template-columns: 1fr; gap: 10px; }
+  .timeline::before { top: 16px; bottom: 16px; right: 28px; left: auto; width: 1px; height: auto; background: linear-gradient(180deg, transparent, var(--line-strong), transparent); }
+  .step { display: grid; grid-template-columns: 46px 60px 1fr; align-items: center; text-align: right; gap: 12px; }
+  .step-no { order: 1; }.step-icon { order: 2; margin: 0; }.step h3, .step p { order: 3; }.step p { grid-column: 3; margin-top: -20px; }
+  .problem-layout, .solution-grid, .roadmap { grid-template-columns: 1fr; }
+  .crowd-image { min-height: 420px; }
+  .gallery-grid { grid-template-columns: 1fr 1fr; grid-auto-rows: 220px; }
+  .photo-card.featured { grid-row: span 1; }
+  .tech-layout { grid-template-columns: 1fr; }
+  .tech-diagram { grid-column: auto; grid-template-columns: 1fr; }
+  .diagram-arrow { transform: rotate(90deg); justify-self: center; }
+  .closing-copy { padding: 34px; }
+  .footer-grid { grid-template-columns: 1fr; }
+}
+
+@media (max-width: 520px) {
+  .hero-proof { gap: 18px; margin-top: 42px; }
+  .hero-lead { font-size: .9rem; }
+  .stats-grid { grid-template-columns: 1fr; }
+  .metric { border-inline-start: 0 !important; border-top: 1px solid var(--line); }
+  .metric:first-child { border-top: 0; }
+  .gallery-grid { grid-template-columns: 1fr; grid-auto-rows: 250px; }
+  .model-frame { height: 340px; }
+  .model-frame.tall { height: 300px; }
+  .chat-panel { min-height: auto; }
+  .chat-log { height: 330px; }
+  .ops-cards { grid-template-columns: 1fr; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+  *, *::before, *::after { animation: none !important; transition: none !important; }
+  .reveal { opacity: 1; transform: none; }
+}
+
+  </style>
+</head>
+<body>
+  <div class="noise" aria-hidden="true"></div>
+  <div class="site-glow site-glow-a" aria-hidden="true"></div>
+  <div class="site-glow site-glow-b" aria-hidden="true"></div>
+
+  <header class="topbar" id="top">
+    <a href="#home" class="brand" aria-label="أثرنا">
+      <span class="brand-mark"><i class="fa-solid fa-archway"></i></span>
+      <span>
+        <strong>أثرنا</strong>
+        <small>ATHRUNA</small>
+      </span>
+    </a>
+
+    <nav class="nav" aria-label="التنقل الرئيسي">
+      <a href="#experience">التجربة</a>
+      <a href="#problem">المشكلة</a>
+      <a href="#solution">الحل</a>
+      <a href="#how">كيف تعمل</a>
+      <a href="#technology">التقنية</a>
+      <a href="#roadmap">خارطة الطريق</a>
+    </nav>
+
+    <a class="nav-cta" href="#ai-guide"><span>جرّب المرشد</span><i class="fa-solid fa-arrow-left"></i></a>
+  </header>
+
+  <main>
+    <section class="hero" id="home">
+      <div class="hero-media" aria-hidden="true"></div>
+      <div class="hero-shade" aria-hidden="true"></div>
+      <div class="hero-grid" aria-hidden="true"></div>
+
+      <div class="hero-content container">
+        <div class="eyebrow"><span></span> JORDAN 2076 HACKATHON · PETRA 2076 TRACK</div>
+        <div class="hero-pill"><i class="fa-solid fa-sparkles"></i> AI × XR × SMART TOURISM</div>
+        <h1>البتراء لها قصة.<br /><em>أثرنا يجعلها شخصية.</em></h1>
+        <p class="hero-lead">من منصة واحدة، نحو رحلة أذكى: معلومات موثوقة، تجربة تفاعلية، إدارة أذكى للحشود، واتصال أفضل بين الزائر والمنظومة السياحية.</p>
+
+        <div class="hero-actions">
+          <a href="#experience" class="btn btn-primary"><span>استكشف التجربة</span><i class="fa-solid fa-arrow-left"></i></a>
+          <a href="#ai-guide" class="btn btn-glass"><i class="fa-solid fa-robot"></i><span>اسأل المرشد الذكي</span></a>
+        </div>
+
+        <div class="hero-proof">
+          <div><span class="dot-live"></span><b>PROTOTYPE</b><small>Demo-ready experience</small></div>
+          <div><b>CLEAR VISION</b><small>ATHRUNA · أثرنا</small></div>
+          <div><b>ARABIC / ENGLISH</b><small>Multilingual journey</small></div>
+        </div>
+      </div>
+
+      <a href="#evidence" class="scroll-cue" aria-label="انتقل إلى الأرقام"><span>SCROLL</span><i class="fa-solid fa-chevron-down"></i></a>
+    </section>
+
+    <section class="stats-strip" id="evidence">
+      <div class="container stats-grid">
+        <article class="metric"><strong>582,550</strong><span>زائر للبتراء في 2025</span></article>
+        <article class="metric"><strong>+27%</strong><span>نمو إجمالي الزوار</span></article>
+        <article class="metric"><strong>+45%</strong><span>نمو الزوار الدوليين</span></article>
+        <article class="metric"><strong>1.17M+</strong><span>ذروة 2023 — ما زالت دون المطابقة</span></article>
+      </div>
+      <div class="container metric-note">أرقام مقترح ATHRUNA كما وردت في ملف العرض التقديمي — مخصّصة لسياق الـHackathon وليست لوحة تشغيل حقيقية.</div>
+    </section>
+
+    <section class="section" id="experience">
+      <div class="container split-section experience-section">
+        <div class="copy-block reveal">
+          <div class="section-kicker">01 · EXPERIENCE</div>
+          <h2>تجربة رقمية<br /><span>تحترم المكان.</span></h2>
+          <p>أثرنا لا يحاول استبدال البتراء. بل يضيف طبقة رقمية دقيقة وخفيفة تساعد الزائر على فهم ما يراه، واختيار طريقه، والتفاعل مع التراث بطريقة شخصية.</p>
+          <div class="feature-list">
+            <div><i class="fa-solid fa-robot"></i><span><b>AI Digital Guide</b><small>إجابة ودّية من قاعدة معرفة مخصّصة للتراث.</small></span></div>
+            <div><i class="fa-solid fa-cubes"></i><span><b>AR / 3D Heritage</b><small>نماذج ثلاثية الأبعاد مرتبطة بالموقع أو QR.</small></span></div>
+            <div><i class="fa-solid fa-language"></i><span><b>Arabic · English</b><small>سرد نصي وصوتي متعدد اللغات في الرؤية المقترحة.</small></span></div>
+          </div>
+        </div>
+
+        <div class="experience-card reveal">
+          <div class="experience-image" role="img" aria-label="منظر حقيقي للخزنة من جبل الخبثة"></div>
+          <div class="image-caption"><span><i class="fa-solid fa-location-dot"></i> Al-Khazneh · Petra</span><span>Real photograph</span></div>
+          <div class="experience-badge"><span>01</span><b>PERSONALIZED HERITAGE</b><small>Visitor-selected narrative</small></div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section section-dark" id="problem">
+      <div class="container">
+        <div class="section-head centered reveal">
+          <div class="section-kicker">02 · THE PROBLEM</div>
+          <h2>البتراء لا تحتاج مزيدًا من الزوار.<br /><span>تحتاج طريقة أذكى لإدارتهم.</span></h2>
+          <p>ثلاثة تحديات ظهرت بوضوح في مقترح ATHRUNA: ازدحام، ثقة المعلومات، وتجزّؤ الخدمات خلال رحلة واحدة.</p>
+        </div>
+
+        <div class="problem-layout">
+          <div class="crowd-image reveal" aria-label="سياح أمام الخزنة في البتراء"></div>
+          <div class="problem-cards">
+            <article class="problem-card reveal"><span>01</span><i class="fa-solid fa-people-group"></i><h3>CROWDING</h3><p>ازدحام عند السيق والنقاط الأعلى كثافة على المسار.</p></article>
+            <article class="problem-card reveal"><span>02</span><i class="fa-solid fa-circle-check"></i><h3>TRUST</h3><p>معلومات تاريخية وتوجيهات ميدانية لا يستطيع الزائر دائمًا التحقق منها.</p></article>
+            <article class="problem-card reveal"><span>03</span><i class="fa-solid fa-link-slash"></i><h3>FRAGMENTATION</h3><p>الخدمات السياحية غير متصلة رقميًا برحلة الزائر كمسار واحد.</p></article>
+          </div>
+        </div>
+
+        <div class="stakeholders reveal">
+          <span class="stake-title">THREE GROUPS · ONE SHARED PROBLEM</span>
+          <div class="stake-line"><span><i class="fa-solid fa-person-hiking"></i> Visitor</span><b>↔</b><span><i class="fa-solid fa-building-columns"></i> Authority</span><b>↔</b><span><i class="fa-solid fa-store"></i> Local Tourism</span></div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="solution">
+      <div class="container">
+        <div class="section-head reveal">
+          <div class="section-kicker">03 · PROPOSED SOLUTION</div>
+          <h2>One Connected<br /><span>Tourism Platform.</span></h2>
+          <p>من تجربة الزائر إلى إدارة الوجهة، تجمع ATHRUNA عناصر المسار في نظام واحد بدل مجموعة أدوات منفصلة.</p>
+        </div>
+
+        <div class="solution-grid">
+          <article class="solution-card big reveal">
+            <div class="card-top"><span class="index">01</span><i class="fa-solid fa-compass"></i></div>
+            <h3>EXPERIENCE</h3>
+            <ul><li>AI Digital Guide</li><li>AR / 3D Heritage</li><li>Personalized route & timing</li></ul>
+          </article>
+          <article class="solution-card reveal">
+            <div class="card-top"><span class="index">02</span><i class="fa-solid fa-chart-line"></i></div>
+            <h3>MANAGEMENT</h3>
+            <ul><li>Smart Booking</li><li>Visitor Flow Management</li><li>Operational visibility</li></ul>
+          </article>
+          <article class="solution-card reveal">
+            <div class="card-top"><span class="index">03</span><i class="fa-solid fa-handshake"></i></div>
+            <h3>SUPPORT</h3>
+            <ul><li>Smart Rest Points</li><li>Local Tourism Connection</li><li>Visitor support</li></ul>
+          </article>
+        </div>
+
+        <div class="quote-panel reveal"><span class="quote-mark">“</span><p>Not another tourism app.<br /><b>A connected smart-tourism ecosystem for Petra.</b></p><small>ATHRUNA · أثرنا</small></div>
+      </div>
+    </section>
+
+    <section class="section section-stone" id="how">
+      <div class="container">
+        <div class="section-head centered reveal">
+          <div class="section-kicker">04 · HOW ATHRUNA WORKS</div>
+          <h2>من الوصول إلى تجربة<br /><span>بترا شخصية.</span></h2>
+        </div>
+
+        <div class="timeline">
+          <article class="step reveal"><div class="step-no">01</div><div class="step-icon"><i class="fa-solid fa-calendar-check"></i></div><h3>BOOK</h3><p>Reserve your visit and time slot.</p></article>
+          <article class="step reveal"><div class="step-no">02</div><div class="step-icon"><i class="fa-solid fa-signal"></i></div><h3>ARRIVE</h3><p>See live crowd levels.</p></article>
+          <article class="step reveal"><div class="step-no">03</div><div class="step-icon"><i class="fa-solid fa-route"></i></div><h3>EXPLORE</h3><p>Follow suggested routes and timing.</p></article>
+          <article class="step reveal"><div class="step-no">04</div><div class="step-icon"><i class="fa-solid fa-cubes"></i></div><h3>DISCOVER</h3><p>Use AR/3D heritage and the AI guide.</p></article>
+          <article class="step reveal"><div class="step-no">05</div><div class="step-icon"><i class="fa-solid fa-people-arrows"></i></div><h3>CONNECT</h3><p>Access guides, local businesses and support.</p></article>
+        </div>
+        <div class="timeline-foot reveal"><i class="fa-solid fa-link"></i> كل تفاعل يمكن أن يضيف جزءًا مفيدًا إلى صورة تشغيلية واحدة — وفق الرؤية المقترحة في العرض.</div>
+      </div>
+    </section>
+
+    <section class="section section-dark" id="ai-guide">
+      <div class="container">
+        <div class="section-head reveal">
+          <div class="section-kicker">05 · AI + INTERACTIVE HERITAGE</div>
+          <h2>تراث<br /><span>يستجيب للزائر.</span></h2>
+          <p>واجهة العرض تجمع مجسمات 3D حقيقية قابلة للتفاعل مع مرشد ذكي يعمل محليًا أو عبر Gemini عند إعداد المفتاح على الخادم.</p>
+        </div>
+
+        <div class="heritage-grid">
+          <div class="model-panel reveal">
+            <div class="panel-head"><span><i class="fa-solid fa-cube"></i> Al-Khazneh · 3D</span><small>اسحب للتدوير 360°</small></div>
+            <div class="model-frame"><iframe title="Al-Khazneh 3D" loading="lazy" allow="autoplay; fullscreen; xr-spatial-tracking" allowfullscreen src="https://sketchfab.com/models/966b88f5768d43ed9ebf4cc726c42f3d/embed?ui_theme=dark&autospin=0.12&ui_infos=0&ui_watermark=0&ui_ar=0&ui_help=0&ui_settings=0&ui_vr=0&ui_fullscreen=1&ui_annotations=1"></iframe></div>
+          </div>
+
+          <div class="chat-panel reveal">
+            <div class="panel-head"><span><i class="fa-solid fa-robot"></i> ATHRUNA DIGITAL GUIDE</span><span class="status" id="aiStatus"><i></i><b id="aiStatusText">Local demo</b></span></div>
+            <div class="chat-log" id="chatLog" aria-live="polite">
+              <div class="chat-message bot">مرحبًا بك في <b>أثرنا</b> 👋<br />اسألني عن الخزنة، السيق، الدير، المقابر الملكية، الأنباط أو فكرة المنصة.</div>
+            </div>
+            <div class="prompt-chips" id="promptChips"></div>
+            <div class="chat-input"><input id="aiInput" type="text" placeholder="من بنى الخزنة؟" autocomplete="off" /><button id="sendBtn" type="button"><i class="fa-solid fa-arrow-up"></i></button></div>
+            <div class="chat-note"><i class="fa-solid fa-shield-halved"></i> بدون مفتاح API تعمل الواجهة بوضع معرفي محلي. إضافة المفتاح تكون في الخادم فقط.</div>
+          </div>
+        </div>
+
+        <div class="model-panel second-model reveal">
+          <div class="panel-head"><span><i class="fa-solid fa-landmark"></i> Royal Tombs · 3D</span><small>Visitor-selected heritage view</small></div>
+          <div class="model-frame tall"><iframe title="Royal Tombs 3D" loading="lazy" allow="autoplay; fullscreen; xr-spatial-tracking" allowfullscreen src="https://sketchfab.com/models/b2383c316db54a7f9a86b97b0a7017dd/embed?ui_theme=dark&autospin=0.12&ui_infos=0&ui_watermark=0&ui_ar=0&ui_help=0&ui_settings=0&ui_vr=0&ui_fullscreen=1&ui_annotations=1"></iframe></div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="gallery">
+      <div class="container">
+        <div class="section-head centered reveal">
+          <div class="section-kicker">06 · REAL PETRA</div>
+          <h2>صور حقيقية من<br /><span>البتراء.</span></h2>
+          <p>صور فوتوغرافية فعلية من Wikimedia Commons، مع إسناد ومعلومات الترخيص في أسفل الصفحة.</p>
+        </div>
+
+        <div class="gallery-grid">
+          <button class="photo-card reveal" data-image="https://upload.wikimedia.org/wikipedia/commons/a/a6/Petra_siq.jpg" data-title="السيق — الممر الصخري الرئيسي" aria-label="تكبير صورة السيق"><img loading="lazy" src="https://upload.wikimedia.org/wikipedia/commons/a/a6/Petra_siq.jpg" alt="السيق في البتراء" /><span>السيق</span><i class="fa-solid fa-expand"></i></button>
+          <button class="photo-card featured reveal" data-image="https://upload.wikimedia.org/wikipedia/commons/a/a4/Petra_-_Al_Khazneh.jpg" data-title="الخزنة — Al-Khazneh" aria-label="تكبير صورة الخزنة"><img loading="lazy" src="https://upload.wikimedia.org/wikipedia/commons/a/a4/Petra_-_Al_Khazneh.jpg" alt="الخزنة في البتراء" /><span>الخزنة</span><i class="fa-solid fa-expand"></i></button>
+          <button class="photo-card reveal" data-image="https://upload.wikimedia.org/wikipedia/commons/3/37/Ad-Deir.jpg" data-title="الدير — Ad-Deir" aria-label="تكبير صورة الدير"><img loading="lazy" src="https://upload.wikimedia.org/wikipedia/commons/3/37/Ad-Deir.jpg" alt="الدير في البتراء" /><span>الدير</span><i class="fa-solid fa-expand"></i></button>
+          <button class="photo-card reveal" data-image="https://upload.wikimedia.org/wikipedia/commons/f/f4/Royal_tombs.jpg" data-title="المقابر الملكية — Royal Tombs" aria-label="تكبير صورة المقابر الملكية"><img loading="lazy" src="https://upload.wikimedia.org/wikipedia/commons/f/f4/Royal_tombs.jpg" alt="المقابر الملكية في البتراء" /><span>المقابر الملكية</span><i class="fa-solid fa-expand"></i></button>
+        </div>
+      </div>
+    </section>
+
+    <section class="section section-dark" id="operations">
+      <div class="container split-section operations-section">
+        <div class="operations-visual reveal">
+          <div class="ops-top"><span><i class="fa-solid fa-tower-broadcast"></i> ATHRUNA OPERATIONS</span><b>DEMO DATA</b></div>
+          <div class="map-canvas">
+            <div class="map-rings"><span></span><span></span><span></span></div>
+            <div class="route route-a"></div><div class="route route-b"></div>
+            <div class="map-pin pin-a"><i class="fa-solid fa-location-dot"></i><span>SIQ</span></div>
+            <div class="map-pin pin-b"><i class="fa-solid fa-location-dot"></i><span>TREASURY</span></div>
+            <div class="map-pin pin-c"><i class="fa-solid fa-location-dot"></i><span>DEIR</span></div>
+            <div class="live-queue"><span class="pulse"></span><b>LIVE CROWD</b><strong>68%</strong><small>High density · simulated</small></div>
+          </div>
+          <div class="ops-cards"><div><span>Next slot</span><b>10:40</b></div><div><span>Route load</span><b>54%</b></div><div><span>Rest points</span><b>04</b></div></div>
+        </div>
+
+        <div class="copy-block reveal">
+          <div class="section-kicker">07 · OPERATIONS</div>
+          <h2>من تجربة السياحة<br /><span>إلى إدارة الوجهة.</span></h2>
+          <p>الرؤية المقترحة لا تكتفي بإرشاد الزائر، بل تربط الحجوزات، بيانات المسارات، نقاط التوقف، والخدمات المحلية بصورة تشغيلية قابلة للعرض على الجهة المسؤولة.</p>
+          <div class="mini-features"><div><i class="fa-solid fa-calendar-check"></i><span><b>Smart Booking</b><small>حجز بالفترات الزمنية.</small></span></div><div><i class="fa-solid fa-person-walking-arrow-right"></i><span><b>Visitor Flow</b><small>معلومات كثافة واقتراح مسارات.</small></span></div><div><i class="fa-solid fa-shop"></i><span><b>Local Tourism</b><small>ربط الزائر بالمرشدين والمنشآت المرخصة.</small></span></div></div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="technology">
+      <div class="container">
+        <div class="section-head centered reveal"><div class="section-kicker">08 · MVP & TECHNICAL FEASIBILITY</div><h2>Buildable Today.<br /><span>Scalable Tomorrow.</span></h2><p>هيكل تقني يعكس الـMVP المقترح في العرض، مع فصل واضح بين تجربة المستخدم والخدمات الخلفية والبيانات.</p></div>
+        <div class="tech-layout">
+          <div class="stack-card reveal"><div class="stack-label">PRODUCT</div><div class="stack-tags"><span>React / Next.js</span><span>Node.js</span><span>Firebase / PostgreSQL</span><span>Google Maps / Mapbox</span></div></div>
+          <div class="stack-card reveal"><div class="stack-label">EXPERIENCE</div><div class="stack-tags"><span>Three.js</span><span>WebXR</span><span>Language Model API</span><span>Push / SMS</span></div></div>
+          <div class="tech-diagram reveal"><div class="diagram-node active">VISITOR<span>Web / Mobile</span></div><div class="diagram-arrow">→</div><div class="diagram-node">ATHRUNA CORE<span>AI + Content + Rules</span></div><div class="diagram-arrow">→</div><div class="diagram-node">AUTHORITY<span>Dashboard</span></div></div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section section-stone" id="impact">
+      <div class="container">
+        <div class="impact-grid">
+          <div class="copy-block reveal"><div class="section-kicker">09 · IMPACT & BUSINESS</div><h2>قيمة مستمرة<br /><span>لأربع جهات.</span></h2><p>في المقترح، الأثر المستهدف موزّع بين الزائر، الإدارة، الاقتصاد المحلي، وإمكانية تكرار النموذج في مواقع تراثية أخرى.</p></div>
+          <div class="impact-list reveal"><div><span>↓</span><b>أوقات انتظار أقل</b><small>Target impact</small></div><div><span>↑</span><b>حجوزات رقمية أكثر</b><small>Target impact</small></div><div><span>↑</span><b>وقت إقامة وإنفاق محلي أعلى</b><small>Target impact</small></div><div><span>↓</span><b>شكاوى مرتبطة بالمعلومات أو التجربة</b><small>Target impact</small></div></div>
+        </div>
+        <div class="business-grid reveal"><div class="business-title">BUSINESS MODEL</div><div class="business-items"><span>Booking commission · B2C</span><span>Government subscription · B2G SaaS</span><span>Premium experience tier</span><span>Local-business visibility</span><span>White-label licensing</span></div></div>
+        <div class="proposal-note reveal"><i class="fa-solid fa-circle-info"></i><span><b>مهم:</b> مؤشرات الأثر أعلاه Proposed / Expected وليست نتائج محققة بعد، كما ورد في ملف العرض.</span></div>
+      </div>
+    </section>
+
+    <section class="section section-dark" id="roadmap">
+      <div class="container">
+        <div class="section-head centered reveal"><div class="section-kicker">10 · ROADMAP</div><h2>من Petra 2076<br /><span>إلى شبكة تراث ذكية.</span></h2></div>
+        <div class="roadmap">
+          <article class="roadmap-card reveal"><span>01</span><b>PROVE</b><small>0–6 months</small><p>Petra pilot: digital booking + audio guide + one hologram/3D model.</p></article>
+          <article class="roadmap-card reveal"><span>02</span><b>SCALE</b><small>6–18 months</small><p>Expand rest / hologram stations and launch the official mobile app.</p></article>
+          <article class="roadmap-card reveal"><span>03</span><b>EXPAND</b><small>18–36 months</small><p>Jerash, Wadi Rum, Umm Qais + tourism-authority SaaS dashboard.</p></article>
+        </div>
+
+        <div class="closing reveal"><div class="closing-copy"><div class="closing-kicker">ATHRUNA · أثرنا</div><h2>Smart Tourism.<br /><em>Digital Heritage.</em><br />A Smarter Petra.</h2><p>المشروع المقترح من فريق <b>Clear Vision</b> ضمن مسار Petra 2076.</p></div><div class="closing-photo" aria-hidden="true"></div></div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="footer">
+    <div class="container footer-grid">
+      <div><div class="footer-brand">أثرنا · ATHRUNA</div><p>Making Petra Smarter. Making Heritage Personal.</p></div>
+      <div><b>TEAM · CLEAR VISION</b><span>Ahmad Al-Jarabsheh · Zaid Al Zoubi · Munther Aljemzawi · Mohammad Al Shammari</span></div>
+      <div><b>PHOTO CREDITS</b><span>Wikimedia Commons: Tom Neys (Siq, public domain) · Mahmoud Helwa (Al-Khazneh, CC BY-SA 3.0) · Kruppsdaddy (Ad-Deir, CC BY-SA 4.0) · RicardoBrea (Royal Tombs, CC BY-SA 4.0) · Dosseman (Jabal al-Khubtha view, CC BY-SA 4.0)</span></div>
+    </div>
+    <div class="container footer-bottom"><span>ATHRUNA · PETRA 2076</span><a href="#top">العودة للأعلى ↑</a></div>
+  </footer>
+
+  <div class="modal" id="imageModal" aria-hidden="true"><button class="modal-close" id="modalClose" type="button" aria-label="إغلاق">×</button><img id="modalImage" src="" alt="" /><div class="modal-caption" id="modalCaption"></div></div>
+
+  <script>
+const localKnowledge = [
+  {
+    keywords: ['الخزنة', 'خزنة', 'khazneh', 'treasury', 'بنى الخزنه', 'من بنى الخزنة'],
+    answer: 'الخزنة (Al-Khazneh) من أشهر واجهات البتراء المنحوتة في الحجر الرملي. تشير المصادر التاريخية إلى أنها شُيّدت على الأرجح في مطلع القرن الأول الميلادي، ويُعتقد أنها كانت ضريحًا ملكيًا، مع ارتباطها بعهد الحارث الرابع.'
+  },
+  {
+    keywords: ['السيق', 'siq', 'الممر'],
+    answer: 'السيق هو الممر الصخري الضيق الذي يقود الزائر إلى قلب البتراء، وينتهي بالمشهد الشهير لواجهة الخزنة. وهو أحد أبرز عناصر تجربة الوصول إلى الموقع.'
+  },
+  {
+    keywords: ['الدير', 'ad deir', 'monastery'],
+    answer: 'الدير (Ad-Deir) واجهة صخرية ضخمة في البتراء، تقع في منطقة مرتفعة ويصل إليها الزائر عبر مسار صاعد طويل. حجمها وموقعها يجعلانها من أهم نقاط الرحلة بعد المنطقة المركزية.'
+  },
+  {
+    keywords: ['المقابر الملكية', 'المقابر', 'royal tombs', 'قبر الجرة'],
+    answer: 'المقابر الملكية مجموعة واجهات صخرية بارزة على منحدرات البتراء، وتشمل عددًا من المقابر الضخمة مثل قبر الجرة وقبر القصر. وهي جزء مهم من المشهد المعماري للموقع.'
+  },
+  {
+    keywords: ['الانباط', 'الأنباط', 'نبطي', 'nabataean'],
+    answer: 'الأنباط حضارة عربية قديمة ازدهرت في جنوب بلاد الشام وشمال غرب الجزيرة العربية، وكانت البتراء عاصمة مملكتهم ومركزًا تجاريًا وثقافيًا مهمًا.'
+  },
+  {
+    keywords: ['البتراء', 'petra', 'المدينة الوردية'],
+    answer: 'البتراء مدينة أثرية في جنوب الأردن، اشتهرت بعمارتها المنحوتة في الحجر الرملي وبنظامها المائي. أُدرجت ضمن قائمة التراث العالمي لليونسكو عام 1985، وكانت عاصمة مملكة الأنباط.'
+  },
+  {
+    keywords: ['اثرنا', 'athruna', 'المشروع', 'الهاكاثون'],
+    answer: 'أثرنا (ATHRUNA) منصة سياحية ذكية مقترحة ضمن Petra 2076 Track، تجمع تجربة الزائر والذكاء الاصطناعي وAR/3D وإدارة التدفق والخدمات المحلية في نظام واحد. هذه النسخة واجهة نموذجية للعرض.'
+  },
+  {
+    keywords: ['افضل وقت', 'متى ازور', 'وقت الزيارة', 'الطقس'],
+    answer: 'للزيارة المريحة عادةً يفضّل كثير من الزوار الأوقات ذات الحرارة المعتدلة، مع بدء الجولة مبكرًا لتقليل التعرض لحرارة النهار. ظروف الطقس وساعات الزيارة الفعلية يجب التحقق منها قبل الزيارة.'
+  }
+];
+
+const state = {
+  messages: [],
+  cloud: false,
+  busy: false
+};
+
+const els = {
+  chatLog: document.getElementById('chatLog'),
+  chips: document.getElementById('promptChips'),
+  input: document.getElementById('aiInput'),
+  send: document.getElementById('sendBtn'),
+  status: document.getElementById('aiStatusText'),
+  modal: document.getElementById('imageModal'),
+  modalImg: document.getElementById('modalImage'),
+  modalCaption: document.getElementById('modalCaption'),
+  modalClose: document.getElementById('modalClose')
+};
+
+function normalize(value) {
+  return String(value || '')
+    .toLowerCase()
+    .replace(/[\u064B-\u0652\u0670\u0640]/g, '')
+    .replace(/[أإآٱ]/g, 'ا')
+    .replace(/ة/g, 'ه')
+    .replace(/ى/g, 'ي')
+    .replace(/ؤ/g, 'و')
+    .replace(/ئ/g, 'ي')
+    .replace(/[^\p{L}\p{N}\s]/gu, ' ')
+    .replace(/\s+/g, ' ')
+    .trim();
+}
+
+function localAnswer(question) {
+  const q = normalize(question);
+  let best = null;
+  let bestScore = 0;
+
+  for (const item of localKnowledge) {
+    let score = 0;
+    for (const keyword of item.keywords) {
+      const k = normalize(keyword);
+      if (k && q.includes(k)) score += k.length >= 5 ? 3 : 1;
+    }
+    if (score > bestScore) {
+      bestScore = score;
+      best = item;
+    }
+  }
+
+  return bestScore ? best.answer : 'يمكنك سؤالي عن الخزنة، السيق، الدير، المقابر الملكية، الأنباط، البتراء أو فكرة أثرنا.';
+}
+
+function setStatus(kind, label) {
+  const dot = document.querySelector('#aiStatus i');
+  if (!dot) return;
+  dot.style.background = kind === 'cloud' ? '#74bff8' : kind === 'error' ? '#e78181' : kind === 'busy' ? '#e8bb80' : '#6fdd99';
+  dot.style.boxShadow = `0 0 10px ${kind === 'cloud' ? '#74bff8' : kind === 'error' ? '#e78181' : kind === 'busy' ? '#e8bb80' : '#6fdd99'}`;
+  els.status.textContent = label;
+}
+
+function pushMessage(text, role = 'bot', note = false) {
+  const el = document.createElement('div');
+  el.className = `chat-message ${role}${note ? ' note' : ''}`;
+  el.textContent = text;
+  els.chatLog.appendChild(el);
+  els.chatLog.scrollTop = els.chatLog.scrollHeight;
+  return el;
+}
+
+function showTyping() {
+  const el = document.createElement('div');
+  el.className = 'chat-message bot';
+  el.id = 'typing';
+  el.textContent = 'أفكر الآن…';
+  els.chatLog.appendChild(el);
+  els.chatLog.scrollTop = els.chatLog.scrollHeight;
+}
+
+function hideTyping() {
+  document.getElementById('typing')?.remove();
+}
+
+async function checkCloud() {
+  try {
+    const res = await fetch('./api/health');
+    const data = await res.json();
+    state.cloud = Boolean(data.cloudAI);
+    setStatus(state.cloud ? 'cloud' : 'local', state.cloud ? `Gemini · ${data.model}` : 'Local demo');
+  } catch {
+    state.cloud = false;
+    setStatus('local', 'Local demo');
+  }
+}
+
+async function ask(question = els.input.value.trim()) {
+  if (!question || state.busy) return;
+  state.busy = true;
+  els.input.value = '';
+  els.send.disabled = true;
+  pushMessage(question, 'user');
+  state.messages.push({ role: 'user', text: question });
+  showTyping();
+  setStatus('busy', 'Thinking…');
+
+  let answer = '';
+
+  try {
+    if (state.cloud) {
+      const res = await fetch('./api/chat', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ messages: state.messages.slice(-12) })
+      });
+      const data = await res.json();
+      if (!res.ok || !data.ok) throw new Error(data.message || 'Cloud AI failed');
+      answer = data.text;
+      setStatus('cloud', `Gemini · ${data.model || 'cloud'}`);
+    } else {
+      await new Promise((resolve) => setTimeout(resolve, 300));
+      answer = localAnswer(question);
+      setStatus('local', 'Local demo');
+    }
+  } catch (error) {
+    answer = localAnswer(question);
+    setStatus('error', 'Fallback local');
+    pushMessage('تعذّر الاتصال بالسحابة، فتم استخدام المرشد المحلي لهذه الإجابة.', 'bot', true);
+  } finally {
+    hideTyping();
+    pushMessage(answer, 'bot');
+    state.messages.push({ role: 'model', text: answer });
+    if (state.messages.length > 12) state.messages = state.messages.slice(-12);
+    els.send.disabled = false;
+    state.busy = false;
+    els.input.focus();
+  }
+}
+
+function buildChips() {
+  const prompts = ['من بنى الخزنة؟', 'ما هو السيق؟', 'احكِ لي عن الدير', 'من هم الأنباط؟', 'ما فكرة أثرنا؟'];
+  for (const prompt of prompts) {
+    const button = document.createElement('button');
+    button.type = 'button';
+    button.className = 'prompt-chip';
+    button.textContent = prompt;
+    button.addEventListener('click', () => ask(prompt));
+    els.chips.appendChild(button);
+  }
+}
+
+function bindGallery() {
+  const modal = els.modal;
+  document.querySelectorAll('.photo-card').forEach((card) => {
+    card.addEventListener('click', () => {
+      const src = card.dataset.image;
+      els.modalImg.src = src;
+      els.modalImg.alt = card.dataset.title || '';
+      els.modalCaption.textContent = card.dataset.title || '';
+      modal.classList.add('open');
+      modal.setAttribute('aria-hidden', 'false');
+      document.body.style.overflow = 'hidden';
+    });
+  });
+
+  const close = () => {
+    modal.classList.remove('open');
+    modal.setAttribute('aria-hidden', 'true');
+    document.body.style.overflow = '';
+    els.modalImg.src = '';
+  };
+
+  els.modalClose.addEventListener('click', close);
+  modal.addEventListener('click', (event) => {
+    if (event.target === modal) close();
+  });
+  document.addEventListener('keydown', (event) => {
+    if (event.key === 'Escape') close();
+  });
+}
+
+function bindReveal() {
+  const items = document.querySelectorAll('.reveal');
+  if (!('IntersectionObserver' in window)) {
+    items.forEach((item) => item.classList.add('visible'));
+    return;
+  }
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach((entry) => {
+      if (entry.isIntersecting) {
+        entry.target.classList.add('visible');
+        observer.unobserve(entry.target);
+      }
+    });
+  }, { threshold: 0.12 });
+  items.forEach((item) => observer.observe(item));
+}
+
+els.send.addEventListener('click', () => ask());
+els.input.addEventListener('keydown', (event) => {
+  if (event.key === 'Enter' && !event.shiftKey) {
+    event.preventDefault();
+    ask();
+  }
+});
+
+buildChips();
+bindGallery();
+bindReveal();
+checkCloud();
+
+  </script>
+</body>
+</html>
